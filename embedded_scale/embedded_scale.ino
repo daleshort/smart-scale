@@ -34,12 +34,6 @@
 AsyncWebServer server(80);
 #define LED 2
 
-// const char* ssid = "CinnamonBuns";
-// const char* password = "hondas2000";
-// const char* mqtt_server = "64.227.29.102";
-
-// #define mqtt_user "mqtt-user"
-// #define mqtt_password "kittens"
 #define generalUpdatePeriod 1000
 unsigned long lastMsgGeneral = 0;
 
