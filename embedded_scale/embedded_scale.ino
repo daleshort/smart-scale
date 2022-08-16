@@ -1,3 +1,4 @@
+
 /*
   Basic ESP8266 MQTT example
   This sketch demonstrates the capabilities of the pubsub library in combination
@@ -22,6 +23,7 @@
 #include <PubSubClient.h>
 #include <string.h>
 #include <Arduino.h>
+#include<stdio.h>
 
 #include <ESPAsyncTCP.h>
 #include <ESPAsyncWebServer.h>
@@ -38,6 +40,11 @@ AsyncWebServer server(80);
 unsigned long lastMsgGeneral = 0;
 
 #define TOPIC "scale"
+
+unsigned int incomingByte = 0; // for incoming serial data
+
+char rec_bytes[20];
+int rec_index = 0;
 
 WiFiClient espClient;
 PubSubClient client(espClient);
@@ -109,18 +116,24 @@ void reconnect() {
 
 void setup() {
 
-  Serial.begin(115200);
+
   setup_wifi();
   client.setServer(mqtt_server, 1883);
   client.setCallback(callback);
+  pinMode(LED, OUTPUT);
+  digitalWrite(LED, LOW);
+
+  Serial.begin(9600);
+
+  Serial.swap();
 }
 
 
 void updateGeneral(void) {
   float trialNumber = 10.00;
 
-  client.publish(TOPIC, String(trialNumber).c_str());
-  Serial.println( String(trialNumber).c_str());
+  //client.publish(TOPIC, String(trialNumber).c_str());
+  //Serial.println( String(trialNumber).c_str());
 
 }
 
@@ -130,26 +143,70 @@ void loop() {
   if (!client.connected()) {
     reconnect();
     updateGeneral();
-    
-  Serial.println("IP Address: ");
-  Serial.println(WiFi.localIP());
-  // WebSerial is accessible at "<IP Address>/webserial" in browser
-  WebSerial.begin(&server);
-  WebSerial.msgCallback(recvMsg);
-  server.begin();
+    Serial.swap();
+
+    Serial.println("IP Address: ");
+    Serial.println(WiFi.localIP());
+    // WebSerial is accessible at "<IP Address>/webserial" in browser
+    WebSerial.begin(&server);
+    //   WebSerial.msgCallback(recvMsg);
+    server.begin();
+    Serial.swap();
 
   }
   client.loop();
+    while (Serial.available() > 0) {
+      // read the incoming byte:
+      //if the byte is a + and the index is not zero, set the index to zero
+      if((Serial.peek() == '+' || Serial.peek() == '-') && rec_index !=0){
+        rec_index = 0;
+      }
+      rec_bytes[rec_index] = Serial.read();
+      rec_index++;
+
+          if (rec_index >= 14) {
+
+     //   delay(1000);
+      //  WebSerial.println(intToAscii(rec_bytes[i]));
+      //  client.publish(TOPIC, String(rec_bytes[i],DEC).c_str());
+   //    client.publish(TOPIC, String(rec_bytes[i]).c_str());
+    //   client.publish(TOPIC, String(rec_bytes[i],DEC).c_str());
+     //  client.publish(TOPIC, String(rec_bytes[i],BIN).c_str());
+       client.publish(TOPIC, String(rec_bytes).c_str());
+       WebSerial.println(String(rec_bytes).c_str());
+      
+      rec_index = 0;
+    }
+  
+    }
+  
+
+
+
+
+
+
 
   unsigned long now = millis();
   if (now - lastMsgGeneral > generalUpdatePeriod) {
     lastMsgGeneral = now;
     updateGeneral();
-    WebSerial.println("Hello!");
+    // WebSerial.println("Hello!");
   }
 
 }
 
+int intToAscii(int number) {
+  return '0' + number;
+}
+
+void printBinary(byte inByte)
+{
+  for (int b = 7; b >= 0; b--)
+  {
+    WebSerial.print(bitRead(inByte, b));
+  }
+}
 
 void recvMsg(uint8_t *data, size_t len) {
   WebSerial.println("Received Data...");

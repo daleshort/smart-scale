@@ -1,0 +1,7 @@
+cryptography
+django
+djangorestframework
+django-cors-headers
+drf-jwt
+pyjwt
+requests

@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Layout from "./Layout";
+
+
+import React, { useReducer } from "react";
+
+import RequireAuth from "./RequireAuth";
+
+
+import { Routes, Route } from "react-router-dom";
+import Login from "./Login";
+
+import Register from "./Register";
+import Home from "./Home";
+import FoodScale from "./FoodScale";
+import CatchAll from "./CatchAll";
+
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  return <div className="App">
+    <Routes>
+      <Route path="/*" element={<Layout />}>
+        <Route path="login" element={<Login />} />
+        <Route path="register" element={<Register />} />
+        <Route path='home' element ={<Home/>} />
+        <Route path='food' element ={<FoodScale/>} />
+        <Route element={<RequireAuth />}>
+        </Route>
+        <Route path='/*' element ={<CatchAll/>} />
+      </Route>
+    </Routes>
+  </div>;
 }
 
 export default App;
