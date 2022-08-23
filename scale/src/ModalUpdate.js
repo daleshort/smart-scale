@@ -5,7 +5,7 @@ import Form from "react-bootstrap/Form";
 import FloatingLabel from "react-bootstrap/esm/FloatingLabel";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
-import useFoodData from "./hooks/useFoodData";
+import {useFoodData} from "./context/FoodDataProvider";
 
 import { useAuth0 } from "@auth0/auth0-react";
 
@@ -14,8 +14,6 @@ const ModalUpdate = ({
   id,
   created_by,
   pointsPerGram,
-  updateCallback,
-  isAdmin,
 }) => {
   const { user, isAuthenticated } = useAuth0();
 
@@ -23,7 +21,7 @@ const ModalUpdate = ({
   const [newValue, setNewValue] = useState(null);
   const [formIsValid, setFormIsValid] = useState(false);
   const [showToolTip, setShowToolTip] = useState(true);
-  const { updateData, deleteData } = useFoodData();
+  const {updateData, getServerData, deleteData, isAdmin } = useFoodData();
 
   const handleShowModal = () => {
     setShowModal(true);
@@ -49,7 +47,7 @@ const ModalUpdate = ({
         points_per_gram: parseFloat(newValue),
         created_by: user.sub,
       }, isAdmin).then(() => {
-        updateCallback(true);
+        getServerData(true);
       });
       handleCloseModal();
     } else {
@@ -59,7 +57,7 @@ const ModalUpdate = ({
 
   const handleDelete = () => {
     deleteData(id,isAdmin).then(() => {
-      updateCallback(true);
+      getServerData(true);
     });
     handleCloseModal();
   };

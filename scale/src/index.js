@@ -6,6 +6,7 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import App from "./App";
 import { Auth0Provider } from "@auth0/auth0-react";
+import FoodDataProvider from "./context/FoodDataProvider";
 
 
 const domain = process.env.REACT_APP_AUTH0_DOMAIN;
@@ -30,9 +31,11 @@ root.render(
         audience="https://quickstarts/api"
         scope="edit:foods"
       >
+        <FoodDataProvider>
         <Routes>
           <Route path="/*" element={<App />} />
         </Routes>
+        </FoodDataProvider>
       </Auth0Provider>
       {/* </AuthProvider> */}
     </BrowserRouter>

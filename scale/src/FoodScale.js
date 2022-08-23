@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import FoodItem from "./FoodItem";
 import { FoodSummary } from "./FoodSummary";
 import MqttScale from "./MqttScale";
-import useFoodData from "./hooks/useFoodData";
+import {useFoodData} from "./context/FoodDataProvider" ;
 
 
 function FoodScale() {
@@ -13,7 +13,7 @@ function FoodScale() {
     { name: "", weight: null, isNew: true },
   ]);
 
-  const {foodData, isAdmin, getServerData } = useFoodData();
+  const {foodData } = useFoodData();
 
 
   const [weight, setWeight] = useState(null);
@@ -83,9 +83,7 @@ const handleRemove = (index) =>{
             addCallback = {handleAddFood}
             removeCallback = {handleRemove}
             key={index}
-            updateCallback = {getServerData}
             created_by = {created_by}
-            isAdmin = {isAdmin}
           />
         );
       })}

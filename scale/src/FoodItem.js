@@ -14,9 +14,7 @@ const FoodItem = ({
   addCallback,
   removeCallback,
   id = null,
-  updateCallback = null,
   created_by=null,
-  isAdmin=false,
 }) => {
   function foodNameForm() {
     return (
@@ -71,9 +69,7 @@ const FoodItem = ({
         foodName={foodName}
         id={id}
         pointsPerGram={pointsPerGram}
-        updateCallback={updateCallback}
         created_by = {created_by}
-        isAdmin = {isAdmin}
       />
       : {foodWeight}g | points per gram:{" "}
       {pointsPerGram != null ? parseFloat(pointsPerGram.toFixed(4)) : "undef"} |
