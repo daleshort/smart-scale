@@ -5,8 +5,9 @@ import Profile from "./Profile";
 import { useAuth0 } from "@auth0/auth0-react";
 import useAxiosAuth0 from "./hooks/useAxiosAuth0";
 
+
 function Home() {
-  const { isLoading, error } = useAuth0();
+  const { isLoading, error, getAccessTokenSilently} = useAuth0();
   const axiosPrivate = useAxiosAuth0();
 
   const testAuth = () => {
@@ -25,6 +26,7 @@ function Home() {
     };
     getMsg();
   };
+
   return (
     <div>
       {error && <div>auth error</div>}

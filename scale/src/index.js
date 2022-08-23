@@ -28,7 +28,7 @@ root.render(
         clientId={clientID}
         redirectUri={window.location.origin}
         audience="https://quickstarts/api"
-        scope="read:messages"
+        scope="edit:foods"
       >
         <Routes>
           <Route path="/*" element={<App />} />

@@ -1,3 +1,4 @@
+from re import T
 from django.shortcuts import render
 
 # Create your views here.
@@ -10,6 +11,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from .utils import jwt_decode_token
 
+
 def get_token_auth_header(request):
     """Obtains the Access Token from the Authorization Header
     """
@@ -18,6 +20,7 @@ def get_token_auth_header(request):
     token = parts[1]
 
     return token
+
 
 def requires_scope(required_scope):
     """Determines if the required scope is present in the Access Token
@@ -37,12 +40,50 @@ def requires_scope(required_scope):
                 for token_scope in token_scopes:
                     if token_scope == required_scope:
                         return f(*args, **kwargs)
-            response = JsonResponse({'message': 'You don\'t have access to this resource'})
+            response = JsonResponse(
+                {'message': 'You don\'t have access to this resource'})
             response.status_code = 403
             return response
         return decorated
     return require_scope
 
+def requires_scope_request(required_scope):
+    """Determines if the required scope is present in the Access Token
+    Args:
+        required_scope (str): The scope required to access the resource
+    """
+    def require_scope_request(f):
+        @wraps(f)
+        def decorated(request,*args, **kwargs):
+            token = get_token_auth_header(args[0])
+            print("token:", token)
+            decoded = jwt_decode_token(token)
+            print("decoded token", decoded)
+            # decoded = jwt.decode(token, verify=False, algorithms=['RS256'])
+            if decoded.get("scope"):
+                token_scopes = decoded["scope"].split()
+                for token_scope in token_scopes:
+                    if token_scope == required_scope:
+                        return f(request,*args, **kwargs)
+            response = JsonResponse(
+                {'message': 'You don\'t have access to this resource'})
+            response.status_code = 403
+            return response
+        return decorated
+    return require_scope_request
+
+
+def get_user(request):
+    token = get_token_auth_header(request)
+    print("token:", token)
+    decoded = jwt_decode_token(token)
+    print("decoded token", decoded)
+    # decoded = jwt.decode(token, verify=False, algorithms=['RS256'])
+    if decoded.get("sub"):
+        response = decoded["sub"]
+    else:
+        raise Exception("no sub info")
+    return response
 
 
 @api_view(['GET'])
@@ -54,6 +95,7 @@ def public(request):
 @api_view(['GET'])
 def private(request):
     return JsonResponse({'message': 'Hello from a private endpoint! You need to be authenticated to see this.'})
+
 
 @api_view(['GET'])
 @requires_scope('read:messages')

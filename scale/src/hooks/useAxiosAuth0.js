@@ -4,16 +4,15 @@ import useRefreshToken from "./useRefreshToken";
 import { useAuth0 } from "@auth0/auth0-react";
 
 const audience = "https://quickstarts/api";
-const scope = "read:messages";
+const scope = "edit:foods";
 
-const useAxiosPrivate = () => {
+const useAxiosAuth0 = () => {
   const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
 
   useEffect(() => {
     const requestIntercept = axiosPrivate.interceptors.request.use(
         async (config) => {
-          console.log("im here")
-          console.log("config start:", config)
+
           if (!config.headers["Authorization"]) {
             const accessToken = await getAccessTokenSilently({
               audience: audience,
@@ -24,7 +23,8 @@ const useAxiosPrivate = () => {
           }
           return config;
       },
-      (error) => Promise.reject(error)
+      (error) => {Promise.reject(error)
+      console.error(error)}
     );
 
     return () => {
@@ -35,4 +35,4 @@ const useAxiosPrivate = () => {
   return axiosPrivate;
 };
 
-export default useAxiosPrivate;
+export default useAxiosAuth0;
