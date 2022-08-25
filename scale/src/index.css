@@ -4,7 +4,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-    background-color: aquamarine;
+  background-color: rgb(34,37,41);
 }
 
 code {
@@ -17,5 +17,5 @@ body > #root > div {
   height: 100vh;
 }
 html{
-  background-color: aquamarine;
+  background-color: rgb(34,37,41);
 }

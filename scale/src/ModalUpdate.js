@@ -241,7 +241,7 @@ const ModalUpdate = ({
     }
   }
   return (
-    <Button onClick={handleShowModal} disabled={foodName == ""}>
+    <button  className="food-item-button" onClick={handleShowModal} disabled={foodName == ""}>
       <div className="food-button-icon">
       {id != undefined ? <FontAwesomeIcon icon={solid("pen")} />: <FontAwesomeIcon icon={solid("pen-to-square")} />}
       </div>
@@ -277,7 +277,7 @@ const ModalUpdate = ({
           </Modal.Footer>
         </Modal>
       </div>
-    </Button>
+    </button>
   );
 };
 

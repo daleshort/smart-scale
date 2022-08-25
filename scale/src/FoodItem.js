@@ -50,6 +50,7 @@ const FoodItem = ({
               console.log("array is empty");
               changeCallback(index, "");
             } else {
+              console.log("index", index);
               changeCallback(index, selection[0].label);
             }
           }}
@@ -61,8 +62,10 @@ const FoodItem = ({
   function renderAddButton() {
     if (isNew) {
       return (
-        <Button
+        <button
+          className="food-item-button"
           onClick={() => {
+            console.log("index of add", index);
             addCallback(index);
           }}
           variant="secondary"
@@ -70,7 +73,7 @@ const FoodItem = ({
           <div className="food-button-icon">
             <FontAwesomeIcon icon={solid("plus")} />
           </div>
-        </Button>
+        </button>
       );
     }
   }
@@ -78,7 +81,8 @@ const FoodItem = ({
   function renderDeleteButton() {
     if (!isNew) {
       return (
-        <Button
+        <button
+          className="food-item-button"
           variant="danger"
           onClick={() => {
             removeCallback(index);
@@ -87,7 +91,7 @@ const FoodItem = ({
           <div className="food-button-icon">
             <FontAwesomeIcon icon={solid("delete-left")} />
           </div>
-        </Button>
+        </button>
       );
     }
   }
@@ -95,20 +99,48 @@ const FoodItem = ({
     <div className="food-item-border-wrap">
       <div key={index} className="food-item-box">
         <div className="food-item-top-row">
-          {foodNameForm()} {renderAddButton()} {renderDeleteButton()}
+          {renderAddButton()} {renderDeleteButton()}
           <ModalUpdate
             foodName={foodName}
             id={id}
             pointsPerGram={pointsPerGram}
             created_by={created_by}
           />
-        </div>
-        : {foodWeight}g | points per gram:{" "}
-        {pointsPerGram != null ? parseFloat(pointsPerGram.toFixed(4)) : "undef"}{" "}
-        | total points:{" "}
-        {pointsPerGram && foodWeight
+          {foodNameForm()}
+          <div className="food-item-data-box">
+            <div className="data-icon">
+              <FontAwesomeIcon icon={solid("scale-balanced")} />
+            </div>
+            <text className="data-text">{foodWeight}g</text>
+          </div>
+          <div className="food-item-data-box">
+            <div className="data-icon">
+              <FontAwesomeIcon icon={solid("utensils")} />
+            </div>
+            <text className="data-text">
+
+                            {pointsPerGram && foodWeight !=null
           ? parseFloat((foodWeight * pointsPerGram).toFixed(2))
-          : "undef"}
+          : "?"}
+            </text>
+          </div>
+          <div className="food-item-data-box">
+            <div className="icon-group">
+              <div className="data-icon">
+                <FontAwesomeIcon icon={solid("utensils")} />
+              </div>
+              <text className="slash-icon">/</text>
+              <div className="data-icon">
+                <FontAwesomeIcon icon={solid("scale-balanced")} />
+              </div>
+            </div>
+            <text className="data-text">
+            {pointsPerGram != null
+                ? parseFloat(pointsPerGram.toFixed(4))
+                : "?"}
+            </text>
+          </div>
+        </div>
       </div>
     </div>
   );

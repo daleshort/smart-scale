@@ -41,9 +41,9 @@ function FoodScale() {
   const updateFoodListById = (index, value) => {
     let updated_list = foodList.concat();
     updated_list[index].name = value;
-
+    console.log("updated list in update:", updated_list)
     setFoodList(updated_list);
-    console.log(updated_list)
+    
   };
 
   const matchFood = (name) => {
@@ -61,6 +61,7 @@ const handleAddFood = (index) =>{
     foodListCopy[index].isNew = false
     foodListCopy.push({ name: "", weight: null, id:null, isNew: true }
     )
+    console.log("foodlist at end of add", foodListCopy)
     setFoodList(foodListCopy)
 }
 

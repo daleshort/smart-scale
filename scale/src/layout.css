@@ -12,6 +12,11 @@
 
   }
 
+  .side-container{
+    padding: 50px;
+
+  }
+
   .flex-item-side{
     flex-grow: 1;
     max-width: 300px;
@@ -19,13 +24,19 @@
 
   }
 
-  .side-container{
-    padding: 50px;
+
+  .modal-content{
+    background: linear-gradient(217deg, rgb(204,225,217), rgba(255,0,0,0) 100%),
+    linear-gradient(127deg, rgb(204,225,217), rgba(255, 255, 255, 0.381) 100%),
+    linear-gradient(336deg, rgb(204,225,217), rgba(0,0,255,0) 100%);;
+    border: solid;
+    border-color: #000000;
+    border-width:3px;
 
   }
 
   .flex-item-main{
-    flex-grow: 3;
+    /* flex-grow: 3; */
     align-self: flex-start;
     display: flex;
     flex-direction: column;
@@ -33,20 +44,23 @@
   }
 
 .food-item-box{
-  background-color: rgb(204,225,217);
+  background: linear-gradient(217deg, rgb(204,225,217), rgba(0, 0, 0, 0.235) 70.71%),
+  linear-gradient(127deg, rgb(204,225,217), rgba(253, 253, 253, 0.79) 70.71%),
+  linear-gradient(336deg, rgb(204,225,217), rgba(0, 0, 0, 0.743) 70.71%);
   padding: 10px;
-  padding-left: 20px;
-  padding-right:20px;
+  min-width: 400px;
   border-radius: 20px;
   }
 
 .food-item-top-row{
   display: flex;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .food-item-border-wrap{
 
-  max-width: 800px;
+  max-width: 900px;
   margin: 10px;
   border-radius: 20px;
   background: linear-gradient(to top, rgb(253, 254, 253), rgba(180, 180, 180, 0)),linear-gradient(to bottom, rgb(0, 0, 0), rgba(0, 0, 0, 0));
@@ -56,9 +70,88 @@
 }
 
 
-  .data-box{
-    background-color: rgb(204,225,217);
 
+.food-item-top-row input{
+  border-radius: 8px;
+  border-width: 3px;
+  border-color: black;
+  background-color: rgb(167, 177, 173);
+  font-weight: bold;
+  min-height: 43px;
+  box-sizing: border-box;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.modal-content input {
+  border-radius: 8px;
+  border-width: 3px;
+  border-color: black;
+  background-color: rgb(194, 210, 203);
+  font-weight: bold;
+  min-height: 43px;
+  box-sizing: border-box;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.food-item-top-row form{
+  width: 250px;
+  
+}
+
+.modal-content input:focus{
+  border-radius: 8px;
+  border-width: 3px;
+  border-color: black;
+  background-color: rgb(229, 241, 237);
+}
+
+
+.food-item-top-row input:focus{
+  border-radius: 8px;
+  border-width: 3px;
+  border-color: black;
+  background-color: rgb(167, 177, 173);
+}
+
+.food-item-data-box{
+  border-radius: 8px;
+  border-width: 3px;
+  border-color: rgba(0, 0, 0);
+  border-style:solid ;
+  height: 43px;
+  display: flex;
+  min-width: 120px;
+  align-items: center;
+  justify-content: space-between;
+  padding:3px;
+  margin: 3px;
+}
+
+.navbar-brand{
+  font-family: 'Audiowide', cursive;
+  font-weight: bold;
+  color:#000000;
+  font-size: x-large;
+  padding-left: 50px;
+  padding-right: 50px;
+  background:linear-gradient(217deg, rgb(204,225,217), rgba(0, 0, 0, 0.235) 70.71%),
+  linear-gradient(127deg, rgb(204,225,217), rgba(253, 253, 253, 0.79) 70.71%),
+  linear-gradient(336deg, rgb(204,225,217), rgba(0, 0, 0, 0.743) 70.71%);
+  margin-right: 0px;
+  border-radius: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 66px;
+}
+
+
+  .data-box{
+    background: linear-gradient(217deg, rgb(204,225,217), rgba(0, 0, 0, 0.235) 70.71%),
+    linear-gradient(127deg, rgb(204,225,217), rgba(253, 253, 253, 0.79) 70.71%),
+    linear-gradient(336deg, rgb(204,225,217), rgba(0, 0, 0, 0.743) 70.71%);
     padding: 15px;
     border-radius: 20px;
     display: flex;
@@ -79,7 +172,9 @@
   }
 
   #servings-control{
-    background-color: rgb(204,225,217);
+    background:linear-gradient(217deg, rgb(204,225,217), rgba(0, 0, 0, 0.235) 70.71%),
+    linear-gradient(127deg, rgb(204,225,217), rgba(253, 253, 253, 0.79) 70.71%),
+    linear-gradient(336deg, rgb(204,225,217), rgba(0, 0, 0, 0.743) 70.71%);
     border-radius: 20px;
     font-family: 'Audiowide', cursive;
     font-weight: bold;
@@ -125,12 +220,64 @@
     margin-left: 3px;
     margin-right: 3px;
     font-size: x-large;
-    color: black;
-
+    
   }
+
+.food-item-button{
+  border-radius: 8px;
+  border-width: 3px;
+  border-color: black;
+  background-color: rgba(0, 0, 0, 0);
+  color: black;
+  margin-left: 5px;
+  margin-right:5px;
+  box-shadow: inset 1px 1px 3px #000000;
+  min-width: 50px;
+}
+
+.food-item-button:hover{
+  background-color: rgba(0, 0, 0, 0.158);
+}
+
+.food-item-button:disabled{
+  background-color: rgba(0, 0, 0, 0.11);
+  color: rgba(0, 0, 0, 0.11);
+  border-color: rgba(0, 0, 0, 0.11);
+  box-shadow: none;
+}
+
+.food-item-button:disabled:active{
+  background-color: rgba(0, 0, 0, 0.11);
+  color: rgba(0, 0, 0, 0.11);
+  border-color: rgba(0, 0, 0, 0.11);
+  box-shadow: none;
+}
+
+.food-item-button:active{
+  background-color: rgb(0, 0, 0);
+  color: rgb(204,225,217);
+  box-shadow: none;
+}
 
 .data-text{
   font-family: 'Audiowide', cursive;
   font-weight: bold;
   font-size: larger;
+}
+
+@media (max-width: 800px) {
+  .flex-container {
+    flex-direction: column-reverse;
+  }
+
+  .flex-item-side{
+    flex-grow: 1;
+    height: auto;
+  }
+
+  .side-container{
+    padding: 10px;
+
+  }
+
 }
