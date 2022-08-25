@@ -9,6 +9,13 @@ import {useFoodData} from "./context/FoodDataProvider";
 
 import { useAuth0 } from "@auth0/auth0-react";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  solid,
+  regular,
+  brands,
+} from "@fortawesome/fontawesome-svg-core/import.macro";
+
 const ModalUpdate = ({
   foodName,
   id,
@@ -235,7 +242,9 @@ const ModalUpdate = ({
   }
   return (
     <Button onClick={handleShowModal} disabled={foodName == ""}>
-      {id != undefined ? "Edit" : "Define"}
+      <div className="food-button-icon">
+      {id != undefined ? <FontAwesomeIcon icon={solid("pen")} />: <FontAwesomeIcon icon={solid("pen-to-square")} />}
+      </div>
       <div onClick={(e) => e.stopPropagation()}>
         <Modal show={showModal} onHide={handleCloseModal}>
           <Modal.Header closeButton>

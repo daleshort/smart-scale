@@ -8,10 +8,13 @@ import {useFoodData} from "./context/FoodDataProvider" ;
 
 function FoodScale() {
   const [foodList, setFoodList] = useState([
-    { name: "apples", weight: 105 },
-    { name: "chocolate", weight: 75 },
-    { name: "", weight: null, isNew: true },
+    { name: "", weight: null, isNew: true, id:null },
   ]);
+  // const [foodList, setFoodList] = useState([
+  //   { name: "apples", weight: 105 },
+  //   { name: "chocolate", weight: 75 },
+  //   { name: "", weight: null, isNew: true },
+  // ]);
 
   const {foodData } = useFoodData();
 
@@ -32,7 +35,6 @@ function FoodScale() {
   }, [weight]);
 
   const handleFoodChange = (id, value) => {
-
     updateFoodListById(id, value);
   };
 
@@ -41,6 +43,7 @@ function FoodScale() {
     updated_list[index].name = value;
 
     setFoodList(updated_list);
+    console.log(updated_list)
   };
 
   const matchFood = (name) => {
@@ -67,8 +70,14 @@ const handleRemove = (index) =>{
     setFoodList(foodListCopy)
 }
   return (
-    <div>
-      <div>FoodScale</div>
+    <div className="flex-container">
+
+      <div className="flex-item-side">
+      <FoodSummary foodList={foodList} pointsPerGramList={foodList.map((food)=>matchFood(food.name)[1])}/>
+      <MqttScale setWeight={setWeight} setUnits={setUnits} />
+      </div>
+
+      <div className="flex-item-main">
       {foodList.map((food, index) => {
         const [ id, pointsPerGram, created_by] = matchFood(food.name)
         return (
@@ -87,8 +96,7 @@ const handleRemove = (index) =>{
           />
         );
       })}
-      <FoodSummary foodList={foodList} pointsPerGramList={foodList.map((food)=>matchFood(food.name)[1])}/>
-      <MqttScale setWeight={setWeight} setUnits={setUnits} />
+      </div>
     </div>
   );
 }

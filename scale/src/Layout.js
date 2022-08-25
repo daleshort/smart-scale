@@ -7,7 +7,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import NavDropdown from "react-bootstrap/NavDropdown";
 
 export default function Layout() {
-  const { logout,user, isAuthenticated } = useAuth0();
+  const { logout,user, isAuthenticated, loginWithRedirect } = useAuth0();
 
   const navigate = useNavigate();
   const handleSelect = (eventKey) => {
@@ -17,7 +17,7 @@ export default function Layout() {
     } else if (eventKey == "register") {
       navigate("/register");
     } else if (eventKey == "login") {
-      navigate("/home");
+      loginWithRedirect();
     } else if (eventKey == 'home'){
         navigate("/home");
     }else if (eventKey == "food") {
@@ -26,21 +26,19 @@ export default function Layout() {
   };
 
   return (
-    <div>
+    <div className="App">
       <Navbar bg="dark" variant="dark" expand="lg">
         <Container>
           <Navbar.Brand>Smart Scale</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto" key='links' onSelect={handleSelect} activeKey={null}>
-              <Nav.Link eventKey="home">Home</Nav.Link>
-            </Nav>
-            <Nav className="me-auto" key='food' onSelect={handleSelect} activeKey={null}>
-              <Nav.Link eventKey="food">Food</Nav.Link>
+              {/* <Nav.Link eventKey="home">Home</Nav.Link>
+              <Nav.Link eventKey="food">Food</Nav.Link> */}
             </Nav>
             <Nav onSelect={handleSelect} key = 'dropdown' activeKey={null}>
               <NavDropdown
-                title={user? user?.nickname : "Anon User"}
+                title={user? user?.nickname : "Log In To Customize!"}
                 id="nav-dropdown"
                 variant="secondary"
               >
@@ -49,12 +47,6 @@ export default function Layout() {
                 )}
                 {!user && (
                 <NavDropdown.Item key="login"  eventKey="login">Login</NavDropdown.Item>
-                )}
-                {!user && ([
-                <NavDropdown.Divider />,
-                <NavDropdown.Item key ="register" eventKey="register">
-                  Register
-                </NavDropdown.Item>]
                 )}
               </NavDropdown>
             </Nav>

@@ -3,6 +3,7 @@ import useAxiosAuth0 from "../hooks/useAxiosAuth0";
 import { default as axiosPublic } from "../api/axios";
 import { useAuth0 } from "@auth0/auth0-react";
 
+
 const FoodDataContext = React.createContext();
 
 export function useFoodData() {
@@ -16,6 +17,7 @@ export default function FoodDataProvider({ children }) {
   const axios = useAxiosAuth0();
 
   const [foodData, setFoodData] = useState();
+  const [foodNames, setFoodNames] = useState();
   const [isAdmin, setIsAdmin] = useState();
 
   const getServerData = async (useAuth = false) => {
@@ -31,6 +33,9 @@ export default function FoodDataProvider({ children }) {
       }
       console.log("foods are:", response.data);
       setFoodData(response.data);
+
+      
+      setFoodNames(response.data.map( (food)=>{return {label: food.name} }) )
     } catch (error) {
       if (!error?.response) {
         console.error("no server response");
@@ -113,6 +118,6 @@ export default function FoodDataProvider({ children }) {
   }, [isAuthenticated]);
 
   return (
-    <FoodDataContext.Provider value={ {foodData, updateData, getServerData, deleteData, isAdmin }}>{children}</FoodDataContext.Provider>
+    <FoodDataContext.Provider value={ {foodData, updateData, getServerData, deleteData, isAdmin, foodNames }}>{children}</FoodDataContext.Provider>
   );
 }

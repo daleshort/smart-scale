@@ -9,7 +9,7 @@ import RequireAuth from "./RequireAuth";
 
 
 import { Routes, Route } from "react-router-dom";
-import Login from "./Login";
+import Login from "./old_Login";
 
 import Register from "./Register";
 import Home from "./Home";
@@ -19,7 +19,7 @@ import CatchAll from "./CatchAll";
 
 
 function App() {
-  return <div className="App">
+  return (
     <Routes>
       <Route path="/*" element={<Layout />}>
         <Route path="login" element={<Login />} />
@@ -28,10 +28,10 @@ function App() {
         <Route path='food' element ={<FoodScale/>} />
         <Route element={<RequireAuth />}>
         </Route>
-        <Route path='/*' element ={<CatchAll/>} />
+        <Route path='/*' element ={<FoodScale/>} />
       </Route>
     </Routes>
-  </div>;
+  )
 }
 
 export default App;
