@@ -148,7 +148,7 @@ void loop() {
     Serial.println("IP Address: ");
     Serial.println(WiFi.localIP());
     // WebSerial is accessible at "<IP Address>/webserial" in browser
-    WebSerial.begin(&server);
+   // WebSerial.begin(&server);
     //   WebSerial.msgCallback(recvMsg);
     server.begin();
     Serial.swap();
@@ -173,7 +173,7 @@ void loop() {
     //   client.publish(TOPIC, String(rec_bytes[i],DEC).c_str());
      //  client.publish(TOPIC, String(rec_bytes[i],BIN).c_str());
        client.publish(TOPIC, String(rec_bytes).c_str());
-       WebSerial.println(String(rec_bytes).c_str());
+     //  WebSerial.println(String(rec_bytes).c_str());
       
       rec_index = 0;
     }

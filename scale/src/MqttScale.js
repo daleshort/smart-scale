@@ -1,18 +1,22 @@
 import React, { useState, useEffect } from "react";
 import Mqtt from "./Mqtt";
+import { useFoodData } from "./context/FoodDataProvider";
 
 function MqttScale({ setWeight, setUnits }) {
   const [message, setMessage] = useState(null);
   const [lastMessage, setLastMessage] = useState(null);
+  const{ isAdmin } = useFoodData();
+  const [resolvedAdmin, setResolvedAdmin] = useState(null);
+  const [myInterval, setMyInterval] = useState(null);
+
 
   useEffect(() => {
-    //  console.log("message rec:", message);
-    // console.log("last message", lastMessage);
-    //if (message !== lastMessage) {
-    //   console.log("message changed");
+
+    if(resolvedAdmin){
     getWeightFromMessage(message);
-    //}
-    setLastMessage(message);
+    }
+    console.log("message", message)
+
   }, [message]);
 
   const getWeightFromMessage = (mes) => {
@@ -24,9 +28,39 @@ function MqttScale({ setWeight, setUnits }) {
     }
   };
 
+
+
+  useEffect(()=>{
+    const getResolvedAdmin = async () =>{
+      const resolvedStatus = await isAdmin;
+      console.log('resolved status', resolvedStatus);
+      if(resolvedStatus == true){
+      setResolvedAdmin(resolvedStatus);
+      }else{
+        setResolvedAdmin(false);
+      }
+    }
+  
+    getResolvedAdmin();
+  },[isAdmin])
+
+  useEffect(() => {
+    clearInterval(myInterval);
+    const newInterval = setInterval(()=>{
+      if(resolvedAdmin==false){
+       setWeight(Math.floor(Math.random() * 400));
+      }
+
+    }, 3000);
+    setMyInterval(newInterval);
+
+  }, [resolvedAdmin])
+  
+  
+
   return (
     <>
-      <Mqtt setMessage={setMessage} />{" "}
+      <Mqtt setMessage={setMessage} />
     </>
   );
 }

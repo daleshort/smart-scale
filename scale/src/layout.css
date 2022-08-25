@@ -13,7 +13,9 @@
   }
 
   .side-container{
-    padding: 50px;
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-top: 10px;
 
   }
 
@@ -37,6 +39,7 @@
 
   .flex-item-main{
     /* flex-grow: 3; */
+    padding-top: 20px;
     align-self: flex-start;
     display: flex;
     flex-direction: column;
