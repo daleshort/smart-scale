@@ -1,4 +1,4 @@
-#Smart Scale
+# Smart Scale
 <!-- wp:buttons -->
 <div class="wp-block-buttons"><!-- wp:button {"gradient":"vivid-cyan-blue-to-vivid-purple","width":75,"align":"center","style":{"border":{"radius":"0px"}}} -->
 <div class="wp-block-button aligncenter has-custom-width wp-block-button__width-75"><a class="wp-block-button__link has-vivid-cyan-blue-to-vivid-purple-gradient-background has-background" href="https://programmerd.com/scale/" style="border-radius:0px" target="_blank" rel="noreferrer noopener"><strong>Live Demo</strong></a></div>
